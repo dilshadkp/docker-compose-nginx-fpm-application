@@ -1,5 +1,6 @@
 # docker-compose-nginx-fpm-application
 
+```
 [root@ip-172-31-32-28 nginx-app]# tree .
 .
 ├── docker-compose.yml
@@ -11,3 +12,4 @@
     │   └── db.sql
     └── website
         └── index.php
+```
