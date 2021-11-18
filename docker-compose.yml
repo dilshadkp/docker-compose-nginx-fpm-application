@@ -1,0 +1,42 @@
+version: '3'
+services:
+  database:
+    image: mysql:latest
+    container_name: database
+    restart: always
+    networks:
+       - mynet
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin123
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=db
+      - MYSQL_PASSWORD=db
+    volumes:
+      - $PWD/nginx/db:/docker-entrypoint-initdb.d
+  
+  php_fpm:
+    build: .
+    container_name: php_fpm
+    restart: always
+    networks:
+       - mynet 
+    volumes:
+      - $PWD/nginx/website/:/usr/share/nginx/html/
+    expose:
+      - 9000
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    networks:
+       - mynet
+    volumes:
+      - $PWD/nginx/conf/:/etc/nginx/conf.d/
+      - $PWD/nginx/website/:/usr/share/nginx/html/
+    ports:
+      - "80:80"
+        
+networks:
+  mynet:
+
